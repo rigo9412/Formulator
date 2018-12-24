@@ -1,6 +1,6 @@
 # Formulator
 #Libreria para generar formularios (alpha)
-Hasta este momento la libreria puede generar EditText, Spinne, RadioGroups, Formulario para la direccion, Formulario para obtener una imagen(proceso)
+Hasta este momento la libreria puede generar EditText, Spinner, RadioGroups, Formulario para la direccion, Formulario para obtener una imagen(proceso)
 
 
 
