@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Forms Library</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_activity_forms">FormsActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="no_address_found">no se encontro la direccion</string>
+    <string name="service_not_available">el servicio no esta habilitado</string>
+    <string name="invalid_lat_long_used">Locacion invalidad</string>
+    <string name="address_found">Direccion encontrada</string>
+    <string name="message_select_option_picture">Selecciona tu imagen</string>
+</resources>
