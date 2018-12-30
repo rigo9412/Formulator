@@ -1,6 +1,7 @@
 package com.rigo.ramos.formslibrary.views
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -124,6 +125,11 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
             btnActionSave.visibility = View.INVISIBLE
             btnNext.visibility = View.VISIBLE
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        adapter.getItem(currentForm).onActivityResult(requestCode,resultCode,data)
     }
 
 

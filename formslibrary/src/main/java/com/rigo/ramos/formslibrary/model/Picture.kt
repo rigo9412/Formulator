@@ -81,24 +81,14 @@ class Picture(bitmap: Bitmap?=null){
         }
     }
 
-    fun generateJSON(): JSONObject{
+    fun getValue(): JSONObject{
         compressImage()
-        val picture = JSONObject()
+        val value = JSONObject()
 
-        picture.put("data",data)
-        picture.put("content_type",contentType)
-        picture.put("name",filename)
-        return picture
-    }
-
-    fun getValues(): ArrayList<String>{
-
-        val values = ArrayList<String>()
-        values.add(data.toString())
-        values.add(contentType.toString())
-        values.add(filename.toString())
-
-        return values
+        value.put("data",data)
+        value.put("content_type",contentType)
+        value.put("name",filename)
+        return value
 
     }
 

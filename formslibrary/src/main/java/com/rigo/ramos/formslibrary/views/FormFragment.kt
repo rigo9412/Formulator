@@ -1,6 +1,7 @@
 package com.rigo.ramos.formslibrary.views
 
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,18 +13,15 @@ import android.view.ViewGroup
 import com.google.android.material.textfield.TextInputLayout
 
 import com.rigo.ramos.formslibrary.R
-import com.rigo.ramos.formslibrary.model.Form
-import com.rigo.ramos.formslibrary.model.TypeFied
-import com.rigo.ramos.formslibrary.model.TypePermission
 import kotlinx.android.synthetic.main.fragment_form.*
 import android.content.pm.PackageManager
+import android.media.ExifInterface
+import android.net.Uri
+import android.provider.MediaStore
 import android.widget.*
 import androidx.core.app.ActivityCompat
-import com.rigo.ramos.formslibrary.model.Picture
-import com.rigo.ramos.formslibrary.views.SingleShotLocationProvider.GPSCoordinates
-
-
-
+import com.rigo.ramos.formslibrary.model.*
+import java.io.IOException
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -45,6 +43,7 @@ class FormFragment : Fragment() {
     private var index = 0
     private var pendingIndex = 0
     lateinit var layoutParams : LinearLayout.LayoutParams
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,7 +101,7 @@ class FormFragment : Fragment() {
                 }
                 TypeFied.SELECT_IMAGE->{
                     val v3 = it.createView(this.requireActivity(),index)
-                    container.addView(v3,layoutParams)
+                    container.addView(v3)
                 }
 
             }
@@ -118,8 +117,76 @@ class FormFragment : Fragment() {
 
 
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            SELECCIONAR_FOTO -> if (resultCode == Activity.RESULT_OK) {
+                // try {
+
+                try {
+
+                    val uri = data?.data
+                    val realPath = ImageFilePath.getPath(this.context!!, data?.data!!)
+                    Log.i("BOTTOM_SHEETT", "onActivityResult: file path : $realPath")
+
+                    val exif = ExifInterface(realPath)
+                    val orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION)
+                    val orientation = if (orientString != null) Integer.parseInt(orientString) else ExifInterface.ORIENTATION_NORMAL
+                    val bitmap = MediaStore.Images.Media.getBitmap(this.context?.contentResolver, uri)
+                    val photoFile = Picture(Picture.rotateBitmap(bitmap!!, orientation))
+                    photoFile.path= realPath
+
+                    val index = SaveStatus.getCurrentIndex(this.context!!)
+                    if (index > -1)
+                        this.setImage(index,photoFile)
+
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+
+
+            }
+            TOMAR_FOTO -> if (resultCode == Activity.RESULT_OK) {
+
+                try {
+                    val index = SaveStatus.getCurrentIndex(this.context!!)
+                    if(index > -1) {
+                        val photoFile = (this.form!!.fields[index] as FieldImage).picture
+                        val exif = ExifInterface(photoFile.path)
+                        val orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION)
+                        val orientation =
+                            if (orientString != null) Integer.parseInt(orientString) else ExifInterface.ORIENTATION_NORMAL
+                        val bitmap = MediaStore.Images.Media.getBitmap(
+                            this.context?.contentResolver,
+                            Uri.fromFile(photoFile.file)
+                        )
+
+                        photoFile.bitmap = Picture.rotateBitmap(bitmap, orientation)
+
+
+                        this.setImage(index, photoFile)
+                    }
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+
+            }
+            else -> {
+                Log.e("Request Code", requestCode.toString() + "")
+                Log.e("result", resultCode.toString() + "")
+            }
+        }
+
+    }
+
+
+
    /* override fun onFocusChange(v: View?, hasFocus: Boolean) {
-       Log.e("INDEX-TAG",v?.tag.toString())
+       Log.e("PATH-TAG",v?.tag.toString())
 
         if(v?.tag.toString().toInt()+1 == form?.fields?.size){
 
@@ -186,7 +253,13 @@ class FormFragment : Fragment() {
 
 
     fun setImage(index: Int , picture: Picture){
-        this.form?.fields!![index].value = picture.getValues()
+        if(this.form?.fields!![index].type == TypeFied.SELECT_IMAGE){
+            (this.form?.fields!![index] as FieldImage).picture = picture
+            this.form?.fields!![index].value!!.add(picture.getValue().toString())
+            val iv = this.view?.findViewWithTag<ImageView>(index)
+            iv?.setImageBitmap(picture.bitmap)
+
+        }
     }
 
     fun validateForm():Form?{
@@ -349,6 +422,8 @@ class FormFragment : Fragment() {
         }// other 'case' lines to check for other
         // permissions this app might request
     }
+
+
 
     interface OnInteractionFormListner{
         fun lastField()
