@@ -1,6 +1,7 @@
 package com.rigo.ramos.formslibrary.views
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,7 @@ import org.json.JSONObject
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
+const val RESULT_FORM = "result_form"
 class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner {
     @SuppressLint("RestrictedApi")
     override fun lastField() {
@@ -47,6 +49,10 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
 
                 }
                 Log.e("JSON-RESULT",result.toString())
+
+                val i = Intent()
+                i.putExtra(RESULT_FORM,result.toString())
+                setResult(Activity.RESULT_OK,i)
                 this@FormsActivity.finish()
             }
         }
