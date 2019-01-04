@@ -32,12 +32,12 @@ class FieldAddress(): FieldText(){
         maxLength = parcel.readValue(Int::class.java.classLoader) as? Int
         minDate = parcel.readValue(Long::class.java.classLoader) as? Long
         maxDate = parcel.readValue(Long::class.java.classLoader) as? Long
-        type = TypeFied.valueOf(parcel.readString()!!)
+        type = TypeField.valueOf(parcel.readString()!!)
         value = parcel.readArrayList(String::class.java.classLoader) as ArrayList<String>?
     }
 
 
-    constructor(id:ArrayList<String>,title:String,required: Boolean,type:TypeFied,value:ArrayList<String>? = arrayListOf()): this(){
+    constructor(id:ArrayList<String>, title:String, required: Boolean, type:TypeField, value:ArrayList<String>? = arrayListOf()): this(){
         this.id = id
         this.title = title
         this.required = required
@@ -134,11 +134,11 @@ class FieldAddress(): FieldText(){
 
         layout.addView(btn)
         layout.addView(progressBar)
-        layout.addView(createEditText(null,context,"Calle",TypeFied.TEXT),layoutParams)
-        layout.addView(createEditText(null,context,"Colonia",TypeFied.TEXT),layoutParams)
-        layout.addView(createEditText(null,context,"Estado",TypeFied.TEXT),layoutParams)
-        layout.addView(createEditText(null,context,"Municipio",TypeFied.TEXT),layoutParams)
-        layout.addView(createEditText(null,context,"Codigo Postal",TypeFied.TEXT),layoutParams)
+        layout.addView(createEditText(null,context,"Calle",TypeField.TEXT),layoutParams)
+        layout.addView(createEditText(null,context,"Colonia",TypeField.TEXT),layoutParams)
+        layout.addView(createEditText(null,context,"Estado",TypeField.TEXT),layoutParams)
+        layout.addView(createEditText(null,context,"Municipio",TypeField.TEXT),layoutParams)
+        layout.addView(createEditText(null,context,"Codigo Postal",TypeField.TEXT),layoutParams)
 
 
 

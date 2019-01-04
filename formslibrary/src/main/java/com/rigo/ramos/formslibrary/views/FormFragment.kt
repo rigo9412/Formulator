@@ -75,8 +75,8 @@ class FormFragment : Fragment() {
             //
             when(it.type){
 
-                TypeFied.TEXT,TypeFied.TEXT_DEC,TypeFied.TEXT_NUM,
-                TypeFied.TEXT_EMAIL,TypeFied.TEXT_PHONE,TypeFied.TEXT_PASSWORD,TypeFied.TEXT_DATE,TypeFied.TEXT_RFC,TypeFied.TEXT_CURP ->{
+                TypeField.TEXT,TypeField.TEXT_DEC,TypeField.TEXT_NUM,TypeField.TEXT_HOURS,
+                TypeField.TEXT_EMAIL,TypeField.TEXT_PHONE,TypeField.TEXT_PASSWORD,TypeField.TEXT_DATE,TypeField.TEXT_RFC,TypeField.TEXT_CURP ->{
                     val v = it.createView(this.context!!,index)
                     val edt = v as TextInputLayout
                     //edt.editText?.onFocusChangeListener = this
@@ -86,20 +86,20 @@ class FormFragment : Fragment() {
 
                     container.addView(v,layoutParams)
                 }
-                TypeFied.SELECT_OPTION, TypeFied.SELECT_RAD ->{
+                TypeField.SELECT_OPTION, TypeField.SELECT_RAD ->{
                     val v2 = it.createView(this.context!!,index)
                     val v3 = it.createTextviewLabel(context!!)
                     container.addView(v3,layoutParams)
                     container.addView(v2,layoutParams)
                 }
-                TypeFied.LAYOUT_ADDRESS->{
+                TypeField.LAYOUT_ADDRESS->{
                     pendingIndex = index
                     if(validatePermission(form?.permission!!)){
                         val v3 = it.createView(this.context!!,index)
                         container.addView(v3,layoutParams)
                     }
                 }
-                TypeFied.SELECT_IMAGE->{
+                TypeField.SELECT_IMAGE->{
                     val v3 = it.createView(this.requireActivity(),index)
                     container.addView(v3)
                 }
@@ -198,21 +198,21 @@ class FormFragment : Fragment() {
                 if (index != null) {
 
                     when (form!!.fields[index].type) {
-                        TypeFied.TEXT, TypeFied.TEXT_DEC, TypeFied.TEXT_NUM,
-                        TypeFied.TEXT_EMAIL, TypeFied.TEXT_PHONE, TypeFied.TEXT_PASSWORD, TypeFied.TEXT_DATE,TypeFied.TEXT_RFC,TypeFied.TEXT_CURP -> {
+                        TypeField.TEXT, TypeField.TEXT_DEC, TypeField.TEXT_NUM,
+                        TypeField.TEXT_EMAIL, TypeField.TEXT_PHONE, TypeField.TEXT_PASSWORD, TypeField.TEXT_DATE,TypeField.TEXT_RFC,TypeField.TEXT_CURP -> {
 
                             if (view is TextInputLayout) {
                                 view.error = null
                                 view.isErrorEnabled = false
                             }
                         }
-                        TypeFied.SELECT_OPTION -> {
+                        TypeField.SELECT_OPTION -> {
                             //NADA
                         }
-                        TypeFied.SELECT_RAD -> {
+                        TypeField.SELECT_RAD -> {
                             //NADA
                         }
-                        TypeFied.LAYOUT_ADDRESS -> {
+                        TypeField.LAYOUT_ADDRESS -> {
 
                             if (view is LinearLayout) {
                                 val view = container.getChildAt(i) as LinearLayout
@@ -253,7 +253,7 @@ class FormFragment : Fragment() {
 
 
     fun setImage(index: Int , picture: Picture){
-        if(this.form?.fields!![index].type == TypeFied.SELECT_IMAGE){
+        if(this.form?.fields!![index].type == TypeField.SELECT_IMAGE){
             (this.form?.fields!![index] as FieldImage).picture = picture
             this.form?.fields!![index].value!!.add(picture.getValue().toString())
             val iv = this.view?.findViewWithTag<ImageView>(index)
@@ -271,8 +271,8 @@ class FormFragment : Fragment() {
             val index = view.tag as Int?
             if (index != null) {
                 when (form!!.fields[index].type) {
-                    TypeFied.TEXT, TypeFied.TEXT_DEC, TypeFied.TEXT_NUM, TypeFied.TEXT_EMAIL,
-                    TypeFied.TEXT_PHONE, TypeFied.TEXT_PASSWORD, TypeFied.TEXT_DATE,TypeFied.TEXT_RFC,TypeFied.TEXT_CURP -> {
+                    TypeField.TEXT, TypeField.TEXT_DEC, TypeField.TEXT_NUM, TypeField.TEXT_EMAIL,TypeField.TEXT_HOURS,
+                    TypeField.TEXT_PHONE, TypeField.TEXT_PASSWORD, TypeField.TEXT_DATE,TypeField.TEXT_RFC,TypeField.TEXT_CURP -> {
                         if (view is TextInputLayout) {
                             form!!.fields[index].value?.add(0,view.editText?.text.toString())
                             if (form!!.fields[index].isValid()) {
@@ -285,19 +285,19 @@ class FormFragment : Fragment() {
                             }
                         }
                     }
-                    TypeFied.SELECT_OPTION -> {
+                    TypeField.SELECT_OPTION -> {
                         if (view is Spinner) {
                             form!!.fields[index].value?.add(0,view.selectedItem.toString())
                         }
                     }
-                    TypeFied.SELECT_RAD -> {
+                    TypeField.SELECT_RAD -> {
                         if (view is RadioGroup) {
                             val idcheck = view.checkedRadioButtonId
                             val viewC = view.findViewById<RadioButton>(idcheck)
                             form!!.fields[index].value?.add(0,viewC.text.toString())
                         }
                     }
-                    TypeFied.LAYOUT_ADDRESS -> {
+                    TypeField.LAYOUT_ADDRESS -> {
                         if (view is LinearLayout) {
 
                             val edt1 = view.getChildAt(2) as TextInputLayout

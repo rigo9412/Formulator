@@ -22,14 +22,14 @@ class FieldOptions() : Field() {
         upperCase = parcel.readValue(Boolean::class.java.classLoader) as? Boolean
         required = parcel.readByte() != 0.toByte()
         errorMessage = parcel.readString()
-        type = TypeFied.valueOf(parcel.readString()!!)
+        type = TypeField.valueOf(parcel.readString()!!)
         value = parcel.readArrayList(String::class.java.classLoader) as ArrayList<String>?
         options = parcel.readArrayList(String::class.java.classLoader) as ArrayList<String>?
     }
 
 
-    constructor(id: ArrayList<String>, title: String, type: TypeFied,
-        options: ArrayList<String>?, value: ArrayList<String>? = arrayListOf()
+    constructor(id: ArrayList<String>, title: String, type: TypeField,
+                options: ArrayList<String>?, value: ArrayList<String>? = arrayListOf()
     ) : this() {
         this.id = id
         this.title = title
@@ -40,8 +40,8 @@ class FieldOptions() : Field() {
 
     override fun createView(context: Context, index: Int): View? {
         return when (type) {
-            TypeFied.SELECT_OPTION -> createSpinner(index, context)
-            TypeFied.SELECT_RAD -> createRadioButtonOptions(index, context)
+            TypeField.SELECT_OPTION -> createSpinner(index, context)
+            TypeField.SELECT_RAD -> createRadioButtonOptions(index, context)
             else -> return null
         }
     }

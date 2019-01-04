@@ -1,6 +1,6 @@
 package com.rigo.ramos.formslibrary.model
 
-enum class TypeFied{
+enum class TypeField{
     TEXT,
     TEXT_NUM,
     TEXT_DEC,
@@ -8,6 +8,7 @@ enum class TypeFied{
     TEXT_EMAIL,
     TEXT_PHONE,
     TEXT_DATE,
+    TEXT_HOURS,
     TEXT_CURP,
     TEXT_RFC,
     SELECT_OPTION,

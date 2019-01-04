@@ -1,6 +1,8 @@
 package com.rigo.ramos.formslibrary.model
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
@@ -16,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.rigo.ramos.formslibrary.R
 import com.rigo.ramos.formslibrary.views.FixedHoloDatePickerDialog
+import com.rigo.ramos.formslibrary.views.TimePickerDialogFixedNougatSpinner
 import java.util.*
 import java.util.regex.Pattern
 
@@ -35,14 +38,14 @@ open class FieldText() : Field(){
         maxLength = parcel.readValue(Int::class.java.classLoader) as? Int
         minDate = parcel.readValue(Long::class.java.classLoader) as? Long
         maxDate = parcel.readValue(Long::class.java.classLoader) as? Long
-        type = TypeFied.valueOf(parcel.readString()!!)
+        type = TypeField.valueOf(parcel.readString()!!)
         value = parcel.readArrayList(String::class.java.classLoader) as ArrayList<String>?
         //options = parcel.readArrayList(String::class.java.classLoader) as ArrayList<String>?
     }
 
 
-    constructor(id:ArrayList<String>,title:String,required: Boolean,type:TypeFied, errorMessage:String?,
-                maxLength: Int? = null , upperCase: Boolean? = false,value:ArrayList<String>? = arrayListOf()): this(){
+    constructor(id:ArrayList<String>, title:String, required: Boolean, type:TypeField, errorMessage:String?,
+                maxLength: Int? = null, upperCase: Boolean? = false, value:ArrayList<String>? = arrayListOf()): this(){
         this.id = id
         this.title = title
         this.required = required
@@ -53,9 +56,11 @@ open class FieldText() : Field(){
         this.type = type
     }
 
-
-    constructor(id:ArrayList<String>,title:String,required: Boolean,type:TypeFied, errorMessage:String?,
-                minDate: Long?,maxDate: Long?,value:ArrayList<String>? = arrayListOf()):this(){
+    /***
+     *  TEXT TYPE DATE
+     */
+    constructor(id:ArrayList<String>, title:String, required: Boolean, type:TypeField, errorMessage:String?,
+                minDate: Long?, maxDate: Long?, value:ArrayList<String>? = arrayListOf()):this(){
         this.id = id
         this.title = title
         this.required = required
@@ -67,8 +72,21 @@ open class FieldText() : Field(){
 
     }
 
+    /**
+     *  TEXT TYPE HOURS
+     */
+    constructor(id:ArrayList<String>, title:String, required: Boolean, type:TypeField, errorMessage:String?, value:ArrayList<String>? = arrayListOf()):this(){
+        this.id = id
+        this.title = title
+        this.required = required
+        this.value = value
+        this.errorMessage = errorMessage
+        this.type = type
 
-    fun createEditText(index: Int?, context: Context, title:String, type:TypeFied, maxDate: Long? = null, minDate: Long? = null, maxLength: Int? = null): TextInputLayout {
+    }
+
+
+    fun createEditText(index: Int?, context: Context, title:String, type:TypeField, maxDate: Long? = null, minDate: Long? = null, maxLength: Int? = null): TextInputLayout {
 
 
         val li = LayoutInflater.from(context)
@@ -78,7 +96,7 @@ open class FieldText() : Field(){
         layout.tag = index
 
         when(type){
-            TypeFied.TEXT_PHONE -> {
+            TypeField.TEXT_PHONE -> {
                 editText.inputType = InputType.TYPE_CLASS_PHONE
                 editText.addTextChangedListener( PhoneNumberFormattingTextWatcher())
                 val FilterArray = arrayOfNulls<InputFilter>(1)
@@ -86,18 +104,18 @@ open class FieldText() : Field(){
                 editText.filters = FilterArray
 
             }
-            TypeFied.TEXT_EMAIL ->  editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            TypeFied.TEXT_NUM ->  editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
-            TypeFied.TEXT_DEC ->  editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-            TypeFied.TEXT_PASSWORD ->  {
+            TypeField.TEXT_EMAIL ->  editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            TypeField.TEXT_NUM ->  editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+            TypeField.TEXT_DEC ->  editText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+            TypeField.TEXT_PASSWORD ->  {
                 editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 editText.transformationMethod = PasswordTransformationMethod.getInstance()
             }
-            TypeFied.TEXT ->  editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE
-            TypeFied.TEXT_DATE-> {
+            TypeField.TEXT ->  editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE
+            TypeField.TEXT_DATE-> {
 
                 val pickerDialog = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                    value?.add(dayOfMonth.toString()+" / "+(month+1)+" / "+year)
+                    value?.add(0,dayOfMonth.toString()+" / "+(month+1)+" / "+year)
                     layout.editText?.setText(value?.get(0))
                 }
 
@@ -123,12 +141,33 @@ open class FieldText() : Field(){
                 editText.isFocusable = false
                 editText.textAlignment = View.TEXT_ALIGNMENT_CENTER
             }
-            TypeFied.TEXT_CURP->{
+            TypeField.TEXT_HOURS->{
+                val pickerDialog = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                    value?.add(0,hourOfDay.toString()+" : " + if (minute == 0) "00" else minute)
+                    layout.editText?.setText(value?.get(0))
+                }
+
+
+                editText.setOnClickListener {
+                    val calendar = Calendar.getInstance()
+                    val hours = calendar.get(Calendar.HOUR_OF_DAY)
+                    val minute = calendar.get(Calendar.MINUTE)
+
+                    val dialog = TimePickerDialogFixedNougatSpinner(context, AlertDialog.THEME_HOLO_LIGHT, pickerDialog, hours,minute,true)
+
+                    dialog.show()
+                }
+                editText.inputType = InputType.TYPE_NULL
+                editText.isFocusable = false
+                editText.textAlignment = View.TEXT_ALIGNMENT_CENTER
+            }
+
+            TypeField.TEXT_CURP->{
                 editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE
                 editText.filters = arrayOf<InputFilter>(InputFilter.AllCaps(), InputFilter.LengthFilter(18))
 
             }
-            TypeFied.TEXT_RFC->{
+            TypeField.TEXT_RFC->{
                 editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE
                 editText.filters = arrayOf<InputFilter>(InputFilter.AllCaps(), InputFilter.LengthFilter(13))
             }
@@ -145,15 +184,16 @@ open class FieldText() : Field(){
 
     override fun createView(context:Context, index: Int) : View? {
         return when(type){
-            TypeFied.TEXT-> createEditText(index,context,title!!,type,null,null,maxLength)
-            TypeFied.TEXT_RFC-> createEditText(index,context,title!!,type)
-            TypeFied.TEXT_CURP-> createEditText(index,context,title!!,type)
-            TypeFied.TEXT_EMAIL-> createEditText(index,context,title!!,type)
-            TypeFied.TEXT_PASSWORD-> createEditText(index,context,title!!,type)
-            TypeFied.TEXT_NUM-> createEditText(index,context,title!!,type)
-            TypeFied.TEXT_DEC-> createEditText(index,context,title!!,type)
-            TypeFied.TEXT_PHONE-> createEditText(index,context,title!!,type)
-            TypeFied.TEXT_DATE-> createEditText(index,context,title!!,type,minDate,maxDate)
+            TypeField.TEXT-> createEditText(index,context,title!!,type,null,null,maxLength)
+            TypeField.TEXT_RFC-> createEditText(index,context,title!!,type)
+            TypeField.TEXT_CURP-> createEditText(index,context,title!!,type)
+            TypeField.TEXT_EMAIL-> createEditText(index,context,title!!,type)
+            TypeField.TEXT_PASSWORD-> createEditText(index,context,title!!,type)
+            TypeField.TEXT_NUM-> createEditText(index,context,title!!,type)
+            TypeField.TEXT_DEC-> createEditText(index,context,title!!,type)
+            TypeField.TEXT_PHONE-> createEditText(index,context,title!!,type)
+            TypeField.TEXT_HOURS-> createEditText(index,context,title!!,type)
+            TypeField.TEXT_DATE-> createEditText(index,context,title!!,type,minDate,maxDate)
             else -> {
                 return null
             }
@@ -279,14 +319,14 @@ open class FieldText() : Field(){
 
     override fun isValid():Boolean{
         return when(type){
-            TypeFied.TEXT-> !(value?.get(0)!!.isNotEmpty() && required)
-            TypeFied.TEXT_EMAIL-> !(value?.get(0)!!.isNotEmpty() && required)&& isEmailValid(value?.get(0)!!)
-            TypeFied.TEXT_PASSWORD-> !(value?.get(0)!!.isNotEmpty() && required) && isValidPassword(value?.get(0)!!)
-            TypeFied.TEXT_NUM-> !(value?.get(0)!!.isNotEmpty() && required)
-            TypeFied.TEXT_DEC-> !(value?.get(0)!!.isNotEmpty() && required)
-            TypeFied.TEXT_PHONE-> !(value?.get(0)!!.isNotEmpty() && required)
-            TypeFied.TEXT_CURP-> !((value?.get(0)!!.isNotEmpty() && required) && isValidCURP(value?.get(0)!!))
-            TypeFied.TEXT_RFC-> !((value?.get(0)!!.isNotEmpty() && required) && isValidRFC(value?.get(0)!!))
+            TypeField.TEXT-> !(value?.get(0)!!.isNotEmpty() && required)
+            TypeField.TEXT_EMAIL-> !(value?.get(0)!!.isNotEmpty() && required)&& isEmailValid(value?.get(0)!!)
+            TypeField.TEXT_PASSWORD-> !(value?.get(0)!!.isNotEmpty() && required) && isValidPassword(value?.get(0)!!)
+            TypeField.TEXT_NUM-> !(value?.get(0)!!.isNotEmpty() && required)
+            TypeField.TEXT_DEC-> !(value?.get(0)!!.isNotEmpty() && required)
+            TypeField.TEXT_PHONE-> !(value?.get(0)!!.isNotEmpty() && required)
+            TypeField.TEXT_CURP-> !((value?.get(0)!!.isNotEmpty() && required) && isValidCURP(value?.get(0)!!))
+            TypeField.TEXT_RFC-> !((value?.get(0)!!.isNotEmpty() && required) && isValidRFC(value?.get(0)!!))
             else -> {
                 return true
             }

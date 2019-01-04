@@ -22,12 +22,12 @@ class FieldImage(): Field(){
         upperCase = parcel.readValue(Boolean::class.java.classLoader) as? Boolean
         required = parcel.readByte() != 0.toByte()
         errorMessage = parcel.readString()
-        type = TypeFied.valueOf(parcel.readString()!!)
+        type = TypeField.valueOf(parcel.readString()!!)
         value = parcel.readArrayList(String::class.java.classLoader) as ArrayList<String>?
     }
 
 
-    constructor(id: ArrayList<String>, title:String, required: Boolean,errorMessage: String, type:TypeFied, value: ArrayList<String>? = arrayListOf()): this(){
+    constructor(id: ArrayList<String>, title:String, required: Boolean, errorMessage: String, type:TypeField, value: ArrayList<String>? = arrayListOf()): this(){
         this.id = id
         this.title = title
         this.required = required
@@ -38,7 +38,7 @@ class FieldImage(): Field(){
 
      override fun createView(context:Context, index: Int) : View? {
         return when(type){
-            TypeFied.SELECT_IMAGE -> createPictureCapture(index,context)
+            TypeField.SELECT_IMAGE -> createPictureCapture(index,context)
             else -> null
         }
     }

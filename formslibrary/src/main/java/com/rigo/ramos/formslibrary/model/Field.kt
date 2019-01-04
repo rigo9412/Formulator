@@ -1,35 +1,11 @@
 package com.rigo.ramos.formslibrary.model
 
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.text.InputType
-import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.rigo.ramos.formslibrary.R
-import java.util.regex.Pattern
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.app.DatePickerDialog
-import android.content.ContentValues.TAG
-import android.content.SharedPreferences
-import android.location.*
 import android.os.*
-import android.telephony.PhoneNumberFormattingTextWatcher
-import android.text.InputFilter
-import android.text.method.PasswordTransformationMethod
-import android.view.LayoutInflater
-import androidx.appcompat.app.AppCompatActivity
-import com.rigo.ramos.formslibrary.views.FixedHoloDatePickerDialog
-import com.rigo.ramos.formslibrary.views.OpcionPickerImageDialog
-import com.rigo.ramos.formslibrary.views.SingleShotLocationProvider
-import java.io.IOException
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -41,7 +17,7 @@ abstract class Field :Parcelable{
     var required:Boolean = false
     var value:ArrayList<String>? = null
     var errorMessage: String? = null
-    lateinit var type:TypeFied
+    lateinit var type:TypeField
 
     abstract fun createView(context:Context, index: Int) : View?
 
