@@ -54,6 +54,16 @@ class FieldOptions() : Field() {
 
         spinner.adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, options)
         spinner.tag = index
+        var defaultValue = 0
+
+        for (i in 0 until options!!.size) {
+            if(value!! != null && value!![0] == options!![i])
+                defaultValue = i
+        }
+
+        spinner.setSelection(defaultValue)
+
+
         return spinner
     }
 
@@ -63,7 +73,7 @@ class FieldOptions() : Field() {
         val params = RadioGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         params.setMargins(16, 16, 16, 16)
         rg.tag = index
-
+        var defaultValue = 0
 
         rg.orientation = RadioGroup.VERTICAL//or RadioGroup.VERTICAL
         for (i in 0 until options!!.size) {
@@ -73,14 +83,15 @@ class FieldOptions() : Field() {
             rad.textSize = 18f
             rad.layoutParams = params
             rad.setPadding(8, 8, 8, 8)
+            if(value!! != null && value!![0] == options!![i])
+                defaultValue = i
 
             rg.addView(rad)
         }
 
-        if (rg.childCount > 0)
-            rg.check(rg.getChildAt(0).id)
-
-
+        if (rg.childCount > 0) {
+            rg.check(rg.getChildAt(defaultValue).id)
+        }
         /*rg.setOnCheckedChangeListener { group, checkedId ->
             Log.e("RAD-ID",checkedId.toString())
             value = options!![checkedId]
@@ -115,9 +126,5 @@ class FieldOptions() : Field() {
             return arrayOfNulls(size)
         }
     }
-
-
-
-
 
 }

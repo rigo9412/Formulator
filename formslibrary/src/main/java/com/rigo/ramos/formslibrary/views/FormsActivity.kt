@@ -33,7 +33,17 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
         setContentView(R.layout.activity_forms)
 
 
-        addForms(intent?.extras!!.getParcelableArrayList(EXTRA_FORMS)!!)
+        val extras = intent
+
+        if(extras != null || extras!!.hasExtra(EXTRA_FORMS)) {
+            addForms(intent?.extras!!.getParcelableArrayList(EXTRA_FORMS)!!)
+
+            if(extras.hasExtra(EXTRA_THEME))
+                setTheme(intent.getIntExtra(EXTRA_THEME,0))
+
+        }else{
+            this.finish()
+        }
 
 
         btnActionSave.setOnClickListener {
@@ -159,5 +169,6 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
         private val UI_ANIMATION_DELAY = 300
 
         val EXTRA_FORMS = "forms"
+        val EXTRA_THEME = "theme"
     }
 }
