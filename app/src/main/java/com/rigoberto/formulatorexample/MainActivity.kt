@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 
             val i = Intent(this, FormsActivity::class.java)
             i.putExtra(FormsActivity.EXTRA_FORMS, arrayListOf(form))
-
+            i.putExtra(FormsActivity.EXTRA_THEME,R.style.AppTheme)
+            i.putExtra(FormsActivity.EXTRA_BACKGROUND_COLOR,R.color.colorBackgroud)
             startActivityForResult(i,FORM_ACTIVITY)
         }
     }

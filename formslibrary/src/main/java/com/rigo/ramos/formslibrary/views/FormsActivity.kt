@@ -45,8 +45,7 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
                 setTheme(extras.getInt(EXTRA_THEME,0))
 
             if(extras.containsKey(EXTRA_BACKGROUND_COLOR)){
-                val view = this.window.decorView
-                view.setBackgroundColor(extras.getInt(EXTRA_BACKGROUND_COLOR,0))
+                this.fullscreen_content.setBackgroundColor(resources.getColor(extras.getInt(EXTRA_BACKGROUND_COLOR,0)))
             }
 
         }else{

@@ -7,7 +7,6 @@
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     tools:context=".views.FormsActivity">
 
     <com.rigo.ramos.formslibrary.views.NoSwipePager
@@ -27,8 +26,8 @@
         android:layout_margin="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:tint="?colorAccent"
         android:src="@drawable/ic_arrow_back_black_24dp"
-        android:tint="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +38,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="1 de 5"
-        android:textColor="@android:color/black"
+        android:textColor="?colorAccent"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/btnBack"
         app:layout_constraintEnd_toStartOf="@+id/btnActionSave"
@@ -58,6 +57,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Guardar"
+        android:textColor="?colorAccent"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -71,6 +71,7 @@
         android:layout_margin="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        app:backgroundTint="?colorAccent"
         android:tint="@android:color/white"
         android:src="@drawable/ic_arrow_forward_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
