@@ -34,7 +34,7 @@ Paso 2
 
 ```
 dependencies {
-		        implementation 'com.github.rigo9412:Formulator:1.0.1'
+	implementation 'com.github.rigo9412:Formulator:1.2'
 }
 
 ```
