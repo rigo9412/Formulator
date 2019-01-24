@@ -19,6 +19,8 @@ import androidx.core.content.FileProvider
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import android.os.StrictMode
+import android.util.Log
+import com.rigo.ramos.formslibrary.BuildConfig
 import java.io.File
 
 
@@ -87,9 +89,8 @@ open class OpcionPickerImageDialog : BottomSheetDialogFragment() {
             // Ensure that there's a camera activity to handle the intent
             if (takePictureIntent.resolveActivity(activity.packageManager) != null) {
                 // Continue only if the File was successfully created
-
-                    val photoURI = FileProvider.getUriForFile(activity,
-                            "com.rigo.ramos.formslibrary.fileprovider",
+                    //com.rigoberto.formulatorexample.com
+                    val photoURI = FileProvider.getUriForFile(activity, getActivity()?.applicationContext?.packageName+".com.rigo.ramos.formslibrary.fileprovider",
                             photoFile)
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     //      takePictureIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

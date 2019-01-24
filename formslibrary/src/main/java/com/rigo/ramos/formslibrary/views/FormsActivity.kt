@@ -12,6 +12,9 @@ import com.rigo.ramos.formslibrary.model.Form
 import kotlinx.android.synthetic.main.activity_forms.*
 import org.json.JSONObject
 
+
+
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -33,13 +36,18 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
         setContentView(R.layout.activity_forms)
 
 
-        val extras = intent
+        val extras = intent.extras
 
-        if(extras != null || extras!!.hasExtra(EXTRA_FORMS)) {
+        if(extras != null || extras!!.containsKey(EXTRA_FORMS)) {
             addForms(intent?.extras!!.getParcelableArrayList(EXTRA_FORMS)!!)
 
-            if(extras.hasExtra(EXTRA_THEME))
-                setTheme(intent.getIntExtra(EXTRA_THEME,0))
+            if(extras.containsKey(EXTRA_THEME))
+                setTheme(extras.getInt(EXTRA_THEME,0))
+
+            if(extras.containsKey(EXTRA_BACKGROUND_COLOR)){
+                val view = this.window.decorView
+                view.setBackgroundColor(extras.getInt(EXTRA_BACKGROUND_COLOR,0))
+            }
 
         }else{
             this.finish()
@@ -170,5 +178,6 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
 
         val EXTRA_FORMS = "forms"
         val EXTRA_THEME = "theme"
+        val EXTRA_BACKGROUND_COLOR = "backgroud"
     }
 }

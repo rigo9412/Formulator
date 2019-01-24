@@ -24,7 +24,7 @@
         <provider
             tools:replace="android:authorities"
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.rigo.ramos.formslibrary.fileprovider"
+            android:authorities="${applicationId}.com.rigo.ramos.formslibrary.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

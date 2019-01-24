@@ -56,9 +56,11 @@ class FieldOptions() : Field() {
         spinner.tag = index
         var defaultValue = 0
 
-        for (i in 0 until options!!.size) {
-            if(value!! != null && value!![0] == options!![i])
-                defaultValue = i
+        if(value?.size!! > 0) {
+            for (i in 0 until options!!.size) {
+                if (value!![0] == options!![i])
+                    defaultValue = i
+            }
         }
 
         spinner.setSelection(defaultValue)
@@ -74,6 +76,7 @@ class FieldOptions() : Field() {
         params.setMargins(16, 16, 16, 16)
         rg.tag = index
         var defaultValue = 0
+        val haveValue = value?.size!! > 0
 
         rg.orientation = RadioGroup.VERTICAL//or RadioGroup.VERTICAL
         for (i in 0 until options!!.size) {
@@ -83,7 +86,7 @@ class FieldOptions() : Field() {
             rad.textSize = 18f
             rad.layoutParams = params
             rad.setPadding(8, 8, 8, 8)
-            if(value!! != null && value!![0] == options!![i])
+            if(haveValue && value!![0] == options!![i])
                 defaultValue = i
 
             rg.addView(rad)
