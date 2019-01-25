@@ -26,7 +26,9 @@ abstract class Field :Parcelable{
     fun createTextviewLabel(context: Context) : TextView{
         val textView =  TextView(context)
         textView.text = title
-        textView.setTextAppearance(context,R.style.TextView_InputLabel)
+        //textView.setTextAppearance(context,R.style.TextView_InputLabel)
+        textView.setPadding(24,0,0,0)
+        textView.setTextColor(context.resources.getColor(R.color.gray))
         return textView
     }
 

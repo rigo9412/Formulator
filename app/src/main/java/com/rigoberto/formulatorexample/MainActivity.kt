@@ -23,15 +23,16 @@ class MainActivity : AppCompatActivity() {
                 arrayListOf("1","2","3"), arrayListOf())
 
 
-            //val field2 = Field(arrayListOf("apellido_paterno"),"Apellido Paterno*",true, TypeField.TEXT,"Campo requerido",140)
+            val field3 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",true, TypeField.TEXT,"Campo requerido",140)
+            val field32 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",true, TypeField.TEXT,"Campo requerido",140)
             //val field3 = Field(arrayListOf("apellido_materno"),"Apellido Materno*",true, TypeField.TEXT,"Campo requerido",140)
-            val form = Form("1","Informacion Personal", arrayListOf(field1,field2,fieldTipoFlotilla))
+            val form = Form("1","Informacion Personal", arrayListOf(field1,field2,fieldTipoFlotilla,field3,field32))
 
 
             val i = Intent(this, FormsActivity::class.java)
             i.putExtra(FormsActivity.EXTRA_FORMS, arrayListOf(form))
-            i.putExtra(FormsActivity.EXTRA_THEME,R.style.AppTheme)
-            i.putExtra(FormsActivity.EXTRA_BACKGROUND_COLOR,R.color.colorBackgroud)
+            i.putExtra(FormsActivity.EXTRA_THEME,R.style.ThemeDark)
+            i.putExtra(FormsActivity.EXTRA_BACKGROUND_COLOR,R.color.blue_normal)
             startActivityForResult(i,FORM_ACTIVITY)
         }
     }

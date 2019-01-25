@@ -22,9 +22,8 @@
         android:padding="16dp"
         android:drawableStart="@drawable/ic_image_black_24dp"
         android:drawablePadding="24dp"
-        android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
-        style="@style/Base.TextAppearance.AppCompat.Title"
+        style="@style/Base.TextAppearance.AppCompat.Title.Inverse"
         android:textColor="#1a1a1a"
         android:text="Galeria"
         android:focusable="true" />
@@ -37,7 +36,6 @@
         android:padding="16dp"
         android:drawableStart="@drawable/ic_photo_camera_black_24dp"
         android:drawablePadding="24dp"
-        android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         style="@style/Base.TextAppearance.AppCompat.Title"
         android:textColor="#1a1a1a"

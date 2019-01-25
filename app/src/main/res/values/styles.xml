@@ -8,4 +8,36 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <!-- Base application theme. -->
+    <style name="ThemeDark" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blue_normal</item>
+        <item name="colorPrimaryDark">@color/blue_dark</item>
+        <item name="colorAccent">@color/orange_normal</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlHighlight">@color/orange_ligth</item>
+        <item name="colorControlActivated">@color/orange_ligth</item>
+    </style>
+
+
+    <style name="ThemeLight" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white_dark</item>
+        <item name="colorAccent">@color/orange_normal</item>
+        <item name="android:textColorPrimary">@color/blue_dark</item>
+        <item name="android:textColorSecondary">@color/blue_light</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorControlNormal">@color/blue_light</item>
+        <item name="colorControlHighlight">@color/blue_light</item>
+        <item name="colorControlActivated">@color/orange_normal</item>
+    </style>
+
+
+
+
 </resources>

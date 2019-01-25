@@ -21,10 +21,11 @@
 
 
     <style name="TextView.InputLabel" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textColor">?android:textColorHint</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:paddingLeft">8dp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">4dp</item>
+        <item name="android:layout_marginStart">16dp</item>
     </style>
 
 
@@ -41,7 +42,27 @@
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
 
 
+    <style name="ErrorText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#f44336</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
+    <style name="HintText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
+    <style name="TextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <!-- reference our hint & error styles -->
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="errorTextAppearance">@style/ErrorText</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="boxStrokeColor">@color/gray</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
 
 
 </resources>

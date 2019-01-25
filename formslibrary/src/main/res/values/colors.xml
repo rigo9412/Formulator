@@ -1,7 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <color name="black_overlay">#e0d7d7d7</color>
     <color name="colorWhite">#FFFF</color>
     <color name="colorDarkGrey">#757575</color>
+    <color name="gray">#bdbdbd</color>
 
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#e0e0e0</color>
 </resources>

@@ -19,38 +19,37 @@
 
     <ImageButton
         android:id="@+id/btnBack"
-        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_gravity="top|start"
         android:layout_margin="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:tint="?colorAccent"
+        android:tint="@color/gray"
         android:src="@drawable/ic_arrow_back_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvSteps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="1 de 5"
-        android:textColor="?colorAccent"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnBack"
-        app:layout_constraintEnd_toStartOf="@+id/btnActionSave"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toEndOf="@+id/btnBack"
-        app:layout_constraintTop_toTopOf="@+id/btnBack"
-        app:layout_constraintVertical_bias="0.53" />
+            android:id="@+id/tvSteps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="1 de 5"
+            android:textSize="18dp"
+            android:textColor="@color/gray"
+            app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+            app:layout_constraintEnd_toStartOf="@+id/btnActionSave"
+            app:layout_constraintHorizontal_bias="0.603"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            android:layout_marginBottom="8dp"/>
 
 
     <Button
         android:id="@+id/btnActionSave"
-        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
