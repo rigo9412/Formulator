@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btnForm.setOnClickListener {
-            val field1 = FieldImage(arrayListOf("nombre"),"Nombre*",true,"Campo requerido", TypeField.SELECT_IMAGE)
-            val field2 = FieldText(arrayListOf("hora"),"Hora de entrega*",true, TypeField.TEXT_HOURS,"Campo requerido")
+            //val field1 = FieldImage(arrayListOf("nombre"),"Nombre*",false,"Campo requerido", TypeField.SELECT_IMAGE)
+            val field2 = FieldText(arrayListOf("hora"),"Hora de entrega*",false, TypeField.TEXT_HOURS,"Campo requerido")
             val fieldTipoFlotilla = FieldOptions(arrayListOf("tipoFlotilla"),"Tipo flotilla",TypeField.SELECT_OPTION,
                 arrayListOf("1","2","3"), arrayListOf())
 
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             val field3 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",true, TypeField.TEXT,"Campo requerido",140)
             val field32 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",true, TypeField.TEXT,"Campo requerido",140)
             //val field3 = Field(arrayListOf("apellido_materno"),"Apellido Materno*",true, TypeField.TEXT,"Campo requerido",140)
-            val form = Form("1","Informacion Personal", arrayListOf(field1,field2,fieldTipoFlotilla,field3,field32))
+            val form = Form("1","Informacion Personal", arrayListOf(field2,fieldTipoFlotilla,field3))
 
 
             val i = Intent(this, FormsActivity::class.java)

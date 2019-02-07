@@ -275,7 +275,7 @@ class FormFragment : Fragment() {
                     TypeField.TEXT_PHONE, TypeField.TEXT_PASSWORD, TypeField.TEXT_DATE,TypeField.TEXT_RFC,TypeField.TEXT_CURP -> {
                         if (view is TextInputLayout) {
                             form!!.fields[index].value?.add(0,view.editText?.text.toString())
-                            if (form!!.fields[index].isValid()) {
+                            if (!form!!.fields[index].isValid()) {
                                 view.error = form!!.fields[index].errorMessage
                                 isValid = false
                             }else{

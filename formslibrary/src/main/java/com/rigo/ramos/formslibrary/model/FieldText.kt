@@ -322,15 +322,15 @@ open class FieldText() : Field(){
             return true
 
         return when(type){
-            TypeField.TEXT-> !(value?.get(0)!!.isNotEmpty())
-            TypeField.TEXT_EMAIL-> !(value?.get(0)!!.isNotEmpty())&& isEmailValid(value?.get(0)!!)
+            TypeField.TEXT-> (value?.get(0)!!.isNotEmpty())
+            TypeField.TEXT_EMAIL-> (value?.get(0)!!.isNotEmpty())&& isEmailValid(value?.get(0)!!)
             TypeField.TEXT_PASSWORD-> !(value?.get(0)!!.isNotEmpty()) && isValidPassword(value?.get(0)!!)
-            TypeField.TEXT_NUM-> !(value?.get(0)!!.isNotEmpty())
-            TypeField.TEXT_HOURS-> !(value?.get(0)!!.isNotEmpty())
-            TypeField.TEXT_DEC-> !(value?.get(0)!!.isNotEmpty())
-            TypeField.TEXT_PHONE-> !(value?.get(0)!!.isNotEmpty())
-            TypeField.TEXT_CURP-> !((value?.get(0)!!.isNotEmpty()) && isValidCURP(value?.get(0)!!))
-            TypeField.TEXT_RFC-> !((value?.get(0)!!.isNotEmpty()) && isValidRFC(value?.get(0)!!))
+            TypeField.TEXT_NUM-> (value?.get(0)!!.isNotEmpty())
+            TypeField.TEXT_HOURS-> (value?.get(0)!!.isNotEmpty())
+            TypeField.TEXT_DEC-> (value?.get(0)!!.isNotEmpty())
+            TypeField.TEXT_PHONE-> (value?.get(0)!!.isNotEmpty())
+            TypeField.TEXT_CURP-> ((value?.get(0)!!.isNotEmpty()) && isValidCURP(value?.get(0)!!))
+            TypeField.TEXT_RFC-> ((value?.get(0)!!.isNotEmpty()) && isValidRFC(value?.get(0)!!))
             else -> {
                 return true
             }
