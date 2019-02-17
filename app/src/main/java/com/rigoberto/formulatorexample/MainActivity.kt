@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
                 arrayListOf("1","2","3"), arrayListOf())
 
 
-            val field3 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",true, TypeField.TEXT,"Campo requerido",140)
+            val field3 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",true, TypeField.TEXT_PASSWORD,"Campo requerido",140)
             val field32 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",true, TypeField.TEXT,"Campo requerido",140)
             //val field3 = Field(arrayListOf("apellido_materno"),"Apellido Materno*",true, TypeField.TEXT,"Campo requerido",140)
             val form = Form("1","Informacion Personal", arrayListOf(field2,fieldTipoFlotilla,field3))
