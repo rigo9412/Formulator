@@ -23,16 +23,19 @@ class MainActivity : AppCompatActivity() {
                 arrayListOf("1","2","3"), arrayListOf())
 
 
-            val field3 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",true, TypeField.TEXT_PASSWORD,"Campo requerido",140)
-            val field32 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",true, TypeField.TEXT,"Campo requerido",140)
+            val field3 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",false, TypeField.TEXT_PHONE,"Campo requerido",140)
+            val field32 = FieldText(arrayListOf("apellido_paterno"),"Apellido Paterno*",false, TypeField.TEXT_PHONE,"Campo requerido",140)
             //val field3 = Field(arrayListOf("apellido_materno"),"Apellido Materno*",true, TypeField.TEXT,"Campo requerido",140)
             val form = Form("1","Informacion Personal", arrayListOf(field2,fieldTipoFlotilla,field3))
 
 
             val i = Intent(this, FormsActivity::class.java)
-            i.putExtra(FormsActivity.EXTRA_FORMS, arrayListOf(form))
+            i.putExtra(FormsActivity.EXTRA_FORMS, arrayListOf(form,form))
             i.putExtra(FormsActivity.EXTRA_THEME,R.style.ThemeDark)
             i.putExtra(FormsActivity.EXTRA_BACKGROUND_COLOR,R.color.blue_normal)
+            i.putExtra(FormsActivity.EXTRA_TEXT_COLOR,R.color.white)
+            i.putExtra(FormsActivity.EXTRA_PRIMARY_COLOR,R.color.primary_dark_material_light)
+            i.putExtra(FormsActivity.EXTRA_ACCENT_COLOR,R.color.colorAccent)
             startActivityForResult(i,FORM_ACTIVITY)
         }
     }

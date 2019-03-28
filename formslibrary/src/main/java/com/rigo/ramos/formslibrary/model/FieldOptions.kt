@@ -48,11 +48,12 @@ class FieldOptions() : Field() {
 
 
     fun createSpinner(index: Int?, context: Context): Spinner {
-
         val li = LayoutInflater.from(context)
         val spinner = li.inflate(R.layout.template_spinner, null) as Spinner
+        val adapter = ArrayAdapter(context, R.layout.item_spinner, options)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
 
-        spinner.adapter = ArrayAdapter(context, R.layout.item_spinner, options)
         spinner.tag = index
         var defaultValue = 0
 

@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.rigo.ramos.formslibrary.R
 import com.rigo.ramos.formslibrary.model.Form
+import com.rigo.ramos.formslibrary.model.SharedPreference
 import kotlinx.android.synthetic.main.activity_forms.*
 import org.json.JSONObject
 
@@ -37,7 +39,7 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
 
 
         val extras = intent.extras
-
+        val pref = SharedPreference(this)
         if(extras != null || extras!!.containsKey(EXTRA_FORMS)) {
             addForms(intent?.extras!!.getParcelableArrayList(EXTRA_FORMS)!!)
 
@@ -45,8 +47,28 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
                 setTheme(extras.getInt(EXTRA_THEME,0))
 
             if(extras.containsKey(EXTRA_BACKGROUND_COLOR)){
+                pref.setColor(SharedPreference.COLOR_BACKGROUND,extras.getInt(EXTRA_BACKGROUND_COLOR,0))
                 this.fullscreen_content.setBackgroundColor(resources.getColor(extras.getInt(EXTRA_BACKGROUND_COLOR,0)))
             }
+
+            if(extras.containsKey(EXTRA_TEXT_COLOR)){
+                pref.setColor(SharedPreference.COLOR_TEXT,extras.getInt(EXTRA_TEXT_COLOR,0))
+            }
+
+            if(extras.containsKey(EXTRA_ACCENT_COLOR)){
+                pref.setColor(SharedPreference.COLOR_ACCENT,extras.getInt(EXTRA_ACCENT_COLOR,0))
+            }
+
+            if(extras.containsKey(EXTRA_PRIMARY_COLOR)){
+                pref.setColor(SharedPreference.COLOR_PRIMARY,extras.getInt(EXTRA_PRIMARY_COLOR,0))
+            }
+
+
+            btnActionSave.setTextColor(resources.getColor(pref.getColor(SharedPreference.COLOR_ACCENT)!!))
+            tvSteps.setTextColor(resources.getColor(pref.getColor(SharedPreference.COLOR_TEXT)!!))
+            btnBack.setColorFilter(ContextCompat.getColor(this, pref.getColor(SharedPreference.COLOR_TEXT)!!), android.graphics.PorterDuff.Mode.SRC_IN)
+            btnNext.setBackgroundColor(pref.getColor(SharedPreference.COLOR_ACCENT)!!)
+
 
         }else{
             this.finish()
@@ -177,6 +199,9 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
 
         val EXTRA_FORMS = "forms"
         val EXTRA_THEME = "theme"
+        val EXTRA_TEXT_COLOR = "text"
+        val EXTRA_ACCENT_COLOR = "accent"
+        val EXTRA_PRIMARY_COLOR = "primary"
         val EXTRA_BACKGROUND_COLOR = "backgroud"
     }
 }

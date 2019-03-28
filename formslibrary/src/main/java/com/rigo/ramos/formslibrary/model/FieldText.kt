@@ -100,7 +100,7 @@ open class FieldText() : Field(){
                 editText.inputType = InputType.TYPE_CLASS_PHONE
                 editText.addTextChangedListener( PhoneNumberFormattingTextWatcher())
                 val FilterArray = arrayOfNulls<InputFilter>(1)
-                FilterArray[0] = InputFilter.LengthFilter(12)
+                FilterArray[0] = InputFilter.LengthFilter(20)
                 editText.filters = FilterArray
 
             }

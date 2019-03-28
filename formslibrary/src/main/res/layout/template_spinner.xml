@@ -4,5 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="#0D000000"
-    android:popupBackground="?colorPrimary"
+    android:spinnerMode="dialog"
+    android:popupBackground="#000"
     style="@style/Widget.AppCompat.Spinner.Underlined" />
