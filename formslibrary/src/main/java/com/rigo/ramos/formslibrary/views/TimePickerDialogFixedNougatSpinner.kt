@@ -1,6 +1,7 @@
 package com.rigo.ramos.formslibrary.views
 
 
+import android.R
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.res.TypedArray
@@ -8,7 +9,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TimePicker
-import kotlinx.android.synthetic.main.notification_template_part_time.*
+
 
 import java.lang.reflect.Constructor
 import java.lang.reflect.Field
@@ -40,7 +41,7 @@ import android.content.DialogInterface
 class TimePickerDialogFixedNougatSpinner : TimePickerDialog {
 
     val TIME_PICKER_INTERVAL = 15
-    private var callback: TimePickerDialog.OnTimeSetListener? = null
+    private var callback: OnTimeSetListener? = null
     private var mIgnoreEvent = false
     private var timePicker: TimePicker? = null
     private var lastHour = -1
@@ -56,7 +57,7 @@ class TimePickerDialogFixedNougatSpinner : TimePickerDialog {
      */
     constructor(
         context: Context,
-        listener: TimePickerDialog.OnTimeSetListener,
+        listener: OnTimeSetListener,
         hourOfDay: Int,
         minute: Int,
         is24HourView: Boolean
@@ -80,7 +81,7 @@ class TimePickerDialogFixedNougatSpinner : TimePickerDialog {
     constructor(
         context: Context,
         themeResId: Int,
-        listener: TimePickerDialog.OnTimeSetListener,
+        listener: OnTimeSetListener,
         hourOfDay: Int,
         minute: Int,
         is24HourView: Boolean
@@ -110,7 +111,7 @@ class TimePickerDialogFixedNougatSpinner : TimePickerDialog {
                 val styleableClass = Class.forName("com.android.internal.R\$styleable")
                 val timePickerStyleableField = styleableClass.getField("TimePicker")
                 val timePickerStyleable = timePickerStyleableField.get(null) as IntArray
-                val a = context.obtainStyledAttributes(null, timePickerStyleable, android.R.attr.timePickerStyle, 0)
+                val a = context.obtainStyledAttributes(null, timePickerStyleable, R.attr.timePickerStyle, 0)
                 val timePickerModeStyleableField = styleableClass.getField("TimePicker_timePickerMode")
                 val timePickerModeStyleable = timePickerModeStyleableField.getInt(null)
                 val mode = a.getInt(timePickerModeStyleable, MODE_SPINNER)
@@ -148,7 +149,7 @@ class TimePickerDialogFixedNougatSpinner : TimePickerDialog {
                             timePicker,
                             context,
                             null,
-                            android.R.attr.timePickerStyle,
+                            R.attr.timePickerStyle,
                             0
                         )
                         delegateField.set(timePicker, delegate) // set the TimePicker.mDelegate to the spinner delegate

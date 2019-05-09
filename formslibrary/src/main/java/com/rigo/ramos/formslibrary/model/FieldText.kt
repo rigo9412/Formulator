@@ -111,7 +111,12 @@ open class FieldText() : Field(){
                 editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 editText.transformationMethod = PasswordTransformationMethod.getInstance()
             }
-            TypeField.TEXT ->  editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE
+            TypeField.TEXT ->  {
+                if(upperCase == true)
+                    editText.filters = arrayOf<InputFilter>(InputFilter.AllCaps())
+
+                editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE
+            }
             TypeField.TEXT_DATE-> {
 
                 val pickerDialog = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
