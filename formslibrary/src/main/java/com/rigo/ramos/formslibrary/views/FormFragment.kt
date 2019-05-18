@@ -39,7 +39,6 @@ class FormFragment : Fragment() {
 
     // TODO: Rename and change types of parameters
     private var form: Form? = null
-    private var listener : OnInteractionFormListner? = null
     private var index = 0
     private var pendingIndex = 0
     lateinit var layoutParams : LinearLayout.LayoutParams
@@ -67,12 +66,12 @@ class FormFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val pref = SharedPreference(this.context!!)
         tvTitle.text = form?.title
-
+        tvTitle.setTextColor(resources.getColor(pref.getColor(SharedPreference.COLOR_TEXT)!!))
         index = 0
         form?.fields?.forEach {
-            //
+
             when(it.type){
 
                 TypeField.TEXT,TypeField.TEXT_DEC,TypeField.TEXT_NUM,TypeField.TEXT_HOURS,
@@ -244,12 +243,6 @@ class FormFragment : Fragment() {
 
        }
     }*/
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        listener = context as OnInteractionFormListner
-
-    }
 
 
     fun setImage(index: Int , picture: Picture){

@@ -10,12 +10,6 @@
     <uses-permission android:name="android.permisssion.ACCESS_COARSE_LOCATION"/>
 
     <application>
-        <activity
-            android:name=".views.FormsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_forms"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/FullscreenTheme"/>
 
         <service
             android:name=".services.FetchAddressIntentService"

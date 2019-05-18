@@ -6,11 +6,16 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.rigo.ramos.formslibrary.model.*
-import com.rigo.ramos.formslibrary.views.FormsActivity
-import com.rigo.ramos.formslibrary.views.RESULT_FORM
+import com.rigo.ramos.formslibrary.views.FormsContainer
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),ActionsListenerForm {
+    override fun onSave(result: JSONObject) {
+        Log.e("result",result.toString())
+
+    }
+
     private val FORM_ACTIVITY = 12
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         btnForm.setOnClickListener {
             //val field1 = FieldImage(arrayListOf("nombre"),"Nombre*",false,"Campo requerido", TypeField.SELECT_IMAGE)
-            val fieldRazonSocial = FieldText(arrayListOf("razonSocial"), "RazonSocial",true, TypeField.TEXT,
+            val fieldRazonSocial = FieldText(arrayListOf("razonSocial"), "RazonSocial",false, TypeField.TEXT,
                 "Es requerido",150,true, arrayListOf() )
             val fieldTipoFlotilla = FieldOptions(arrayListOf("tipoFlotilla"),"Tipo flotilla",TypeField.SELECT_OPTION,
                 arrayListOf("1","2","3"), arrayListOf())
@@ -30,21 +35,20 @@ class MainActivity : AppCompatActivity() {
             val form = Form("1","Informacion Personal", arrayListOf(fieldRazonSocial,fieldTipoFlotilla,field3))
 
 
-            val i = Intent(this, FormsActivity::class.java)
-            i.putExtra(FormsActivity.EXTRA_FORMS, arrayListOf(form,form))
-            i.putExtra(FormsActivity.EXTRA_THEME,R.style.ThemeDark)
-            i.putExtra(FormsActivity.EXTRA_BACKGROUND_COLOR,R.color.blue_normal)
-            i.putExtra(FormsActivity.EXTRA_TEXT_COLOR,R.color.white)
-            i.putExtra(FormsActivity.EXTRA_PRIMARY_COLOR,R.color.primary_dark_material_light)
-            i.putExtra(FormsActivity.EXTRA_ACCENT_COLOR,R.color.colorAccent)
-            startActivityForResult(i,FORM_ACTIVITY)
+            val i = Bundle()
+            i.putParcelableArrayList(FormsContainer.EXTRA_FORMS, arrayListOf(form))
+            i.putInt(FormsContainer.EXTRA_THEME,R.style.FullScreenDialogStyle)
+            i.putInt(FormsContainer.EXTRA_BACKGROUND_COLOR,R.color.blue_normal)
+            i.putInt(FormsContainer.EXTRA_TEXT_COLOR,R.color.white)
+            i.putInt(FormsContainer.EXTRA_PRIMARY_COLOR,R.color.white)
+            i.putInt(FormsContainer.EXTRA_ACCENT_COLOR,R.color.colorAccent)
+
+            val dialog = FormsContainer()
+            val ft = this.supportFragmentManager.beginTransaction()
+            dialog.arguments = i
+            dialog.show(ft, FormsContainer.TAG)
+
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK && requestCode == FORM_ACTIVITY){
-            Log.e("RESULT-FORM",data?.getStringExtra(RESULT_FORM))
-        }
-    }
 }

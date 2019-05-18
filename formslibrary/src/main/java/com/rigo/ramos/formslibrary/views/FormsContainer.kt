@@ -2,17 +2,25 @@ package com.rigo.ramos.formslibrary.views
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import com.rigo.ramos.formslibrary.R
+import com.rigo.ramos.formslibrary.model.ActionsListenerForm
 import com.rigo.ramos.formslibrary.model.Form
 import com.rigo.ramos.formslibrary.model.SharedPreference
-import kotlinx.android.synthetic.main.activity_forms.*
+import kotlinx.android.synthetic.main.container_forms.*
 import org.json.JSONObject
+
+
+
+
 
 
 
@@ -21,35 +29,56 @@ import org.json.JSONObject
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-const val RESULT_FORM = "result_form"
-class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner {
+
+class FormsContainer : DialogFragment(), FormFragment.OnInteractionFormListner {
+
+    lateinit var listener: ActionsListenerForm
+    private var forms =  ArrayList<Form>()
+    private lateinit var adapter:BottomAdapter
+    private var currentForm = -1;
     @SuppressLint("RestrictedApi")
     override fun lastField() {
         hideControls()
     }
 
-    private var forms=  ArrayList<Form>()
-    var adapter = BottomAdapter(this.supportFragmentManager)
-    private var currentForm = -1;
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_forms)
-
-
-        val extras = intent.extras
-        val pref = SharedPreference(this)
+        val extras = arguments
         if(extras != null || extras!!.containsKey(EXTRA_FORMS)) {
-            addForms(intent?.extras!!.getParcelableArrayList(EXTRA_FORMS)!!)
+            setStyle(DialogFragment.STYLE_NORMAL, extras.getInt(EXTRA_THEME,R.style.FullScreenDialogStyle));
+        }else{
+            dismiss()
+        }
+    }
 
-            if(extras.containsKey(EXTRA_THEME))
-                setTheme(extras.getInt(EXTRA_THEME,0))
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        val view  = inflater.inflate(R.layout.container_forms, container, false);
+        adapter = BottomAdapter(this.childFragmentManager)
 
-            if(extras.containsKey(EXTRA_BACKGROUND_COLOR)){
+        return view;
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+       val extras = arguments
+        val pref = SharedPreference(this.context!!)
+        if(extras != null || extras!!.containsKey(EXTRA_FORMS)) {
+            addForms(extras!!.getParcelableArrayList(EXTRA_FORMS)!!)
+
+            //if(extras.containsKey(EXTRA_THEME))
+            //this.activity?.setTheme(extras.getInt(EXTRA_THEME,0))
+
+            /*if(extras.containsKey(EXTRA_BACKGROUND_COLOR)){
                 pref.setColor(SharedPreference.COLOR_BACKGROUND,extras.getInt(EXTRA_BACKGROUND_COLOR,0))
                 this.fullscreen_content.setBackgroundColor(resources.getColor(extras.getInt(EXTRA_BACKGROUND_COLOR,0)))
-            }
+            }*/
 
             if(extras.containsKey(EXTRA_TEXT_COLOR)){
                 pref.setColor(SharedPreference.COLOR_TEXT,extras.getInt(EXTRA_TEXT_COLOR,0))
@@ -66,12 +95,12 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
 
             btnActionSave.setTextColor(resources.getColor(pref.getColor(SharedPreference.COLOR_ACCENT)!!))
             tvSteps.setTextColor(resources.getColor(pref.getColor(SharedPreference.COLOR_TEXT)!!))
-            btnBack.setColorFilter(ContextCompat.getColor(this, pref.getColor(SharedPreference.COLOR_TEXT)!!), android.graphics.PorterDuff.Mode.SRC_IN)
+            btnBack.setColorFilter(ContextCompat.getColor(this.context!!, pref.getColor(SharedPreference.COLOR_TEXT)!!), android.graphics.PorterDuff.Mode.SRC_IN)
             btnNext.setBackgroundColor(pref.getColor(SharedPreference.COLOR_ACCENT)!!)
 
 
         }else{
-            this.finish()
+            this.dismiss()
         }
 
 
@@ -88,11 +117,7 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
 
                 }
                 Log.e("JSON-RESULT",result.toString())
-
-                val i = Intent()
-                i.putExtra(RESULT_FORM,result.toString())
-                setResult(Activity.RESULT_OK,i)
-                this@FormsActivity.finish()
+                listener.onSave(result)
             }
         }
 
@@ -114,7 +139,7 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
 
         btnBack.setOnClickListener {
             if(currentForm == 0)
-                this@FormsActivity.finish()
+                this@FormsContainer.dismiss()
             else{
                 currentForm--
                 tvSteps.text =  "${(currentForm + 1)} de ${adapter.count}"
@@ -125,8 +150,31 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
             hideControls()
         }
 
-
     }
+
+
+
+    override fun onStart() {
+        super.onStart()
+        val dialog = dialog
+        if (dialog != null) {
+            val width = ViewGroup.LayoutParams.MATCH_PARENT
+            val height = ViewGroup.LayoutParams.MATCH_PARENT
+            dialog.window.setLayout(width, height)
+        }
+    }
+
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        listener = context as ActionsListenerForm
+    }
+
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        listener = activity as ActionsListenerForm
+    }
+
 
 
     fun isValidForm():Boolean{
@@ -159,6 +207,8 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
 
         hideControls()
     }
+
+
 
 
     @SuppressLint("RestrictedApi")
@@ -203,5 +253,9 @@ class FormsActivity : AppCompatActivity(), FormFragment.OnInteractionFormListner
         val EXTRA_ACCENT_COLOR = "accent"
         val EXTRA_PRIMARY_COLOR = "primary"
         val EXTRA_BACKGROUND_COLOR = "backgroud"
+        val TAG = "FORM-CONTAINER"
+        val BROADCAST_PRIVIDER_FORM = "BROADCAST_PRIVIDER_FORM"
+        val BROADCAST_PRIVIDER_FORM_OK = "BROADCAST_PRIVIDER_FORM_OK"
+        val BROADCAST_PRIVIDER_FORM_MESSAGE = "BROADCAST_PRIVIDER_FORM_MESSAGE"
     }
 }
