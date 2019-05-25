@@ -95,6 +95,7 @@ class FormsContainer : DialogFragment(), FormFragment.OnInteractionFormListner {
 
             btnActionSave.setTextColor(resources.getColor(pref.getColor(SharedPreference.COLOR_ACCENT)!!))
             tvSteps.setTextColor(resources.getColor(pref.getColor(SharedPreference.COLOR_TEXT)!!))
+            btnActionSave.setTextColor(resources.getColor(pref.getColor(SharedPreference.COLOR_TEXT)!!))
             btnBack.setColorFilter(ContextCompat.getColor(this.context!!, pref.getColor(SharedPreference.COLOR_TEXT)!!), android.graphics.PorterDuff.Mode.SRC_IN)
             btnNext.setBackgroundColor(pref.getColor(SharedPreference.COLOR_ACCENT)!!)
 
