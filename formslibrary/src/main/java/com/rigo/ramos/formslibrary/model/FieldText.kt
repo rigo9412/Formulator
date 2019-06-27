@@ -57,6 +57,25 @@ open class FieldText() : Field(){
     }
 
     /***
+     *  TEXT TYPE TITLE SECTION
+     */
+
+    constructor(id:ArrayList<String>, title:String, required: Boolean, type:TypeField, errorMessage:String?,
+                maxLength: Int? = null, upperCase: Boolean? = false, value:ArrayList<String>? = arrayListOf(), labelSection: String?): this(){
+        this.id = id
+        this.title = title
+        this.required = required
+        this.value = value
+        this.errorMessage = errorMessage
+        this.maxLength = maxLength
+        this.upperCase = upperCase
+        this.type = type
+        this.titleSection = labelSection
+    }
+
+
+
+    /***
      *  TEXT TYPE DATE
      */
     constructor(id:ArrayList<String>, title:String, required: Boolean, type:TypeField, errorMessage:String?,
@@ -86,7 +105,7 @@ open class FieldText() : Field(){
     }
 
 
-    fun createEditText(index: Int?, context: Context, title:String, type:TypeField, maxDate: Long? = null, minDate: Long? = null, maxLength: Int? = null): TextInputLayout {
+    fun createEditText(index: Int?, context: Context, title:String, type:TypeField, maxDate: Long? = null, minDate: Long? = null, maxLength: Int? = null,labelSection:String? = null): TextInputLayout {
 
 
         val li = LayoutInflater.from(context)

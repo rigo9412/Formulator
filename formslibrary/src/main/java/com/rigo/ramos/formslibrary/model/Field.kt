@@ -11,8 +11,9 @@ import kotlin.collections.ArrayList
 
 abstract class Field :Parcelable{
 
-     var id:ArrayList<String>? = null
-     var title:String? = null
+    var id:ArrayList<String>? = null
+    var title:String? = null
+    var titleSection: String? = null
     var upperCase:Boolean? = null
     var required:Boolean = false
     var value:ArrayList<String>? = null
@@ -25,7 +26,10 @@ abstract class Field :Parcelable{
 
     fun createTextviewLabel(context: Context) : TextView{
         val textView =  TextView(context)
-        textView.text = title
+        if(type == TypeField.TEXT)
+            textView.text = titleSection
+        else
+            textView.text = title
         //textView.setTextAppearance(context,R.style.TextView_InputLabel)
         textView.setPadding(24,0,0,0)
         textView.setTextColor(context.resources.getColor(R.color.gray))

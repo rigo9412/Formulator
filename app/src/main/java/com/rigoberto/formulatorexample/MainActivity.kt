@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(),ActionsListenerForm {
         btnForm.setOnClickListener {
             //val field1 = FieldImage(arrayListOf("nombre"),"Nombre*",false,"Campo requerido", TypeField.SELECT_IMAGE)
             val fieldRazonSocial = FieldText(arrayListOf("razonSocial"), "RazonSocial",false, TypeField.TEXT,
-                "Es requerido",150,true, arrayListOf() )
+                "Es requerido",150,true, arrayListOf(),"------- o captura la direccion -------" )
             val fieldTipoFlotilla = FieldOptions(arrayListOf("tipoFlotilla"),"Tipo flotilla",TypeField.SELECT_OPTION,
                 arrayListOf("1","2","3"), arrayListOf())
 

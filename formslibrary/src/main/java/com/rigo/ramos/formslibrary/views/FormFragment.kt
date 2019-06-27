@@ -18,6 +18,7 @@ import android.content.pm.PackageManager
 import android.media.ExifInterface
 import android.net.Uri
 import android.provider.MediaStore
+import android.view.Gravity
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import com.rigo.ramos.formslibrary.model.*
@@ -76,6 +77,13 @@ class FormFragment : Fragment() {
 
                 TypeField.TEXT,TypeField.TEXT_DEC,TypeField.TEXT_NUM,TypeField.TEXT_HOURS,
                 TypeField.TEXT_EMAIL,TypeField.TEXT_PHONE,TypeField.TEXT_PASSWORD,TypeField.TEXT_DATE,TypeField.TEXT_RFC,TypeField.TEXT_CURP ->{
+
+                    if(it.titleSection != null){
+                        val v3 = it.createTextviewLabel(context!!)
+                        v3.gravity = Gravity.CENTER
+                        container.addView(v3,layoutParams)
+                    }
+
                     val v = it.createView(this.context!!,index)
                     val edt = v as TextInputLayout
                     //edt.editText?.onFocusChangeListener = this
